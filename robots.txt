@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chaygray89.github.io/scroll-world/sitemap.xml
