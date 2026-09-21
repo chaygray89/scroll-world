@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070706" />
+  <meta name="description" content="NiteRun Labs maps the path from lead to revenue, identifies the highest-value leak, fixes it, and measures what changed." />
+  <meta property="og:title" content="NiteRun Labs - Find the money your business is missing" />
+  <meta property="og:description" content="Find the leak. Fix it. Measure the result." />
+  <meta property="og:type" content="website" />
+  <title>NiteRun Labs - Find the money your business is missing</title>
+  <style>
+:root {
+  --bg: #070706;
+  --bg-soft: #0d0c0a;
+  --panel: #12110e;
+  --ink: #eee9df;
+  --muted: #9d978d;
+  --line: #2a2721;
+  --accent: #d9bd7c;
+  --accent-ink: #14110b;
+  --danger: #bc704f;
+  --header-h: 78px;
+  --announce-h: 36px;
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+a { color: inherit; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 9999;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.announcement {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 90;
+  height: var(--announce-h);
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.site-header {
+  position: fixed;
+  top: var(--announce-h);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  height: var(--header-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 28px;
+  padding: 0 clamp(22px, 4.2vw, 68px);
+  border-bottom: 1px solid transparent;
+  transition: background-color .25s ease, border-color .25s ease;
+}
+.site-header.is-scrolled {
+  background: rgba(7, 7, 6, .88);
+  border-color: rgba(238, 233, 223, .08);
+  backdrop-filter: blur(18px);
+}
+.brand {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-weight: 650;
+  letter-spacing: -.015em;
+}
+.brand-mark {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+.brand-mark i {
+  position: absolute;
+  display: block;
+  background: var(--ink);
+}
+.brand-mark i:first-child {
+  width: 15px;
+  height: 22px;
+  left: 2px;
+  top: 2px;
+  clip-path: polygon(0 0, 100% 0, 100% 65%, 62% 100%, 0 100%);
+}
+.brand-mark i:last-child {
+  width: 13px;
+  height: 18px;
+  right: 1px;
+  bottom: 1px;
+  background: var(--accent);
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%, 0 34%);
+}
+.desktop-nav { display: flex; gap: 28px; }
+.desktop-nav a, .site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color .2s ease;
+}
+.desktop-nav a:hover, .desktop-nav a:focus-visible, .site-footer a:hover, .site-footer a:focus-visible { color: var(--ink); }
+.header-cta {
+  justify-self: end;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.header-cta:hover, .header-cta:focus-visible { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+.menu-button, .mobile-menu { display: none; }
+
+#world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.world-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, .76);
+}
+.scroll-progress {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: var(--ink);
+}
+
+main { position: relative; z-index: 3; }
+.scene {
+  position: relative;
+  min-height: 116vh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--header-h) + var(--announce-h) + 42px) clamp(24px, 6vw, 100px) 72px;
+}
+.scene-hero { min-height: 132vh; align-items: flex-start; }
+.scene-copy {
+  width: min(620px, 46vw);
+  margin-top: 7vh;
+  opacity: .26;
+  transform: translateY(28px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.scene.is-active .scene-copy { opacity: 1; transform: translateY(0); }
+.scene-copy-right { margin-left: auto; width: min(570px, 42vw); }
+.hero-copy { margin-top: 16vh; width: min(760px, 62vw); opacity: 1; transform: none; }
+.final-copy { width: min(880px, 78vw); margin: 4vh auto 0; text-align: center; }
+
+.eyebrow, .step {
+  margin: 0 0 18px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 11px;
+  font-weight: 750;
+}
+.step { display: inline-flex; align-items: center; gap: 12px; }
+.step span {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  letter-spacing: 0;
+  font-size: 10px;
+}
+
+h1, h2, h3 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.055em; }
+h1 { max-width: 870px; font-size: clamp(64px, 8.8vw, 142px); line-height: .88; }
+h2 { max-width: 760px; font-size: clamp(52px, 6.5vw, 104px); line-height: .91; }
+h3 { font-size: clamp(27px, 3vw, 42px); line-height: 1; }
+
+.scene-copy > p:not(.eyebrow):not(.step):not(.fine-print):not(.lede), .lede {
+  max-width: 58ch;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.55;
+}
+.lede { max-width: 55ch; font-size: clamp(18px, 1.7vw, 23px); }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.button {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 650;
+  transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.button:hover, .button:focus-visible { transform: translateY(-2px); }
+.button-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.button-ghost { background: rgba(7, 7, 6, .56); color: var(--ink); }
+
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 40px;
+  color: #777269;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.hero-proof span:not(:last-child)::after { content: " /"; color: #47433c; }
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 8vh;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #777269;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.scroll-cue i {
+  width: 1px;
+  height: 58px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -16px;
+  width: 1px;
+  height: 16px;
+  background: var(--accent);
+  animation: cue 1.8s ease-in-out infinite;
+}
+@keyframes cue { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(74px); opacity: 0; } }
+
+.facts {
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 0;
+  border-top: 1px solid var(--line);
+}
+.facts li {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.facts b { color: var(--ink); font-size: 13px; }
+.facts span { color: var(--muted); font-size: 13px; }
+
+.equation {
+  margin-top: 34px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
+}
+.equation span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
+.equation strong { display: block; margin-top: 9px; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(22px, 2.5vw, 34px); }
+
+.price-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 6px 20px;
+  width: min(480px, 100%);
+  margin-top: 34px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.price-line span { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; }
+.price-line strong { grid-row: span 2; font-family: Georgia, "Times New Roman", serif; font-size: clamp(44px, 5vw, 72px); font-weight: 400; letter-spacing: -.05em; color: var(--accent); }
+.price-line small { color: var(--muted); }
+.text-link { display: inline-flex; gap: 8px; margin-top: 24px; color: var(--ink); text-underline-offset: 5px; }
+
+.proof-strip, .loop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+}
+.proof-strip span, .loop span {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  background: rgba(7, 7, 6, .52);
+}
+.proof-strip i { width: 20px; height: 1px; background: var(--line); }
+.loop span:nth-child(4) { border-color: var(--accent); color: var(--accent); }
+
+.scan-form {
+  width: min(760px, 100%);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin: 34px auto 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: #0b0a08;
+}
+.scan-form input {
+  min-width: 0;
+  height: 54px;
+  padding: 0 16px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+}
+.scan-form input::placeholder { color: #676158; }
+.scan-form input:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); }
+.scan-form button {
+  border: 0;
+  padding: 0 22px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+.scan-result {
+  width: min(760px, 100%);
+  margin: 20px auto 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: #0b0a08;
+  text-align: left;
+}
+.scan-result[hidden] { display: none; }
+.scan-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.scan-status span { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+.scan-result > p:not(.scan-status) { margin: 14px 0 20px; color: var(--muted); line-height: 1.55; }
+.fine-print { margin-top: 18px; color: #6f6a61; font-size: 11px; }
+
+.site-footer {
+  position: relative;
+  z-index: 4;
+  min-height: 240px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 54px clamp(24px, 6vw, 100px);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+.site-footer > div { display: flex; flex-direction: column; gap: 7px; }
+.site-footer > div span { font-family: Georgia, "Times New Roman", serif; font-size: 26px; }
+.site-footer small { color: var(--muted); }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+
+@media (max-width: 900px) {
+  :root { --header-h: 68px; --announce-h: 32px; }
+  .announcement { font-size: 9px; letter-spacing: .09em; }
+  .site-header { grid-template-columns: 1fr auto; padding: 0 20px; }
+  .desktop-nav, .header-cta { display: none; }
+  .brand { font-size: 14px; }
+  .menu-button {
+    position: fixed;
+    top: calc(var(--announce-h) + 18px);
+    right: 18px;
+    z-index: 120;
+    width: 38px;
+    height: 32px;
+    display: grid;
+    place-content: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .menu-button span { display: block; width: 24px; height: 1px; background: var(--ink); transition: transform .2s ease; }
+  .menu-button[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  .menu-button[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    display: grid;
+    align-items: end;
+    padding: 120px 26px 42px;
+    background: rgba(7, 7, 6, .97);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+  }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+  .mobile-menu nav { display: grid; gap: 4px; }
+  .mobile-menu a { padding: 14px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-family: Georgia, "Times New Roman", serif; font-size: 28px; }
+
+  .scene { min-height: 112vh; padding: calc(var(--header-h) + var(--announce-h) + 40px) 22px 70px; align-items: flex-end; }
+  .scene-hero { min-height: 126vh; align-items: flex-start; }
+  .scene-copy, .scene-copy-right, .hero-copy, .final-copy { width: 100%; margin-left: 0; margin-right: 0; }
+  .hero-copy { margin-top: 12vh; }
+  .scene-copy { margin-top: 0; margin-bottom: 5vh; }
+  .scene-copy-right { text-align: left; }
+  .final-copy { margin-bottom: 3vh; text-align: left; }
+  h1 { font-size: clamp(54px, 16vw, 86px); max-width: 9ch; }
+  h2 { font-size: clamp(48px, 13vw, 76px); max-width: 10ch; }
+  .scene-copy > p:not(.eyebrow):not(.step):not(.fine-print):not(.lede), .lede { max-width: 36ch; font-size: 16px; }
+  .scroll-cue { bottom: 7vh; }
+  .facts li { grid-template-columns: 100px 1fr; }
+  .proof-strip { gap: 7px; }
+  .proof-strip i { display: none; }
+  .scan-form { grid-template-columns: 1fr; }
+  .scan-form button { min-height: 50px; }
+  .site-footer { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 520px) {
+  .hero-proof { max-width: 290px; }
+  .hero-proof span:not(:last-child)::after { content: ""; }
+  .price-line { grid-template-columns: 1fr auto; }
+  .price-line strong { font-size: 50px; }
+  .loop { max-width: 320px; }
+  .site-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  .scene-copy { opacity: 1; transform: none; }
+}
+
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="announcement" aria-label="Announcement">
+    <span>Business improvement, measured in dollars.</span>
+  </div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="NiteRun Labs home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span>NiteRun Labs</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#observe">How it works</a>
+      <a href="#lead-fix">Lead Fix</a>
+      <a href="#proof">Proof</a>
+    </nav>
+
+    <a class="header-cta" href="https://calendly.com/aioutreachadmin/30min?utm_source=niterunlabs_site&utm_campaign=business_scan" target="_blank" rel="noreferrer">
+      Book a diagnostic
+    </a>
+  </header>
+
+  <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" data-menu-button>
+    <span></span><span></span>
+  </button>
+
+  <aside class="mobile-menu" aria-hidden="true" data-mobile-menu>
+    <nav aria-label="Mobile navigation">
+      <a href="#observe">How it works</a>
+      <a href="#lead-fix">Lead Fix</a>
+      <a href="#proof">Proof</a>
+      <a href="https://calendly.com/aioutreachadmin/30min?utm_source=niterunlabs_site&utm_campaign=business_scan" target="_blank" rel="noreferrer">Book a diagnostic</a>
+    </nav>
+  </aside>
+
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="world-vignette" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span data-progress></span></div>
+
+  <main id="main">
+    <section id="top" class="scene scene-hero" data-scene="0">
+      <div class="scene-copy hero-copy">
+        <p class="eyebrow">NiteRun Labs</p>
+        <h1>Find the money your business is missing.</h1>
+        <p class="lede">We map the path from lead to revenue, rank the highest-value leak, fix one problem first, and measure what changed.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#scan">Scan my business</a>
+          <a class="button button-ghost" href="#observe">See the system</a>
+        </div>
+        <div class="hero-proof" aria-label="Service approach">
+          <span>Revenue path</span><span>One fix first</span><span>Measured outcomes</span><span>Scale what works</span>
+        </div>
+      </div>
+      <p class="scroll-cue"><span>Scroll to enter the business</span><i aria-hidden="true"></i></p>
+    </section>
+
+    <section id="observe" class="scene" data-scene="1">
+      <div class="scene-copy">
+        <p class="step"><span>01</span> Map</p>
+        <h2>See the whole path to revenue.</h2>
+        <p>Traffic. Leads. Calls. Appointments. Estimates. Sales. Revenue. NiteRun Labs treats the business as one connected system instead of a pile of separate dashboards.</p>
+        <ul class="facts" aria-label="Observation principles">
+          <li><b>Track</b><span>What your systems actually show</span></li>
+          <li><b>Gap</b><span>Where customers or dollars are dropping out</span></li>
+          <li><b>Impact</b><span>What the leak could cost under stated assumptions</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="diagnose" class="scene" data-scene="2">
+      <div class="scene-copy scene-copy-right">
+        <p class="step"><span>02</span> Prioritize</p>
+        <h2>Find the leak that matters most.</h2>
+        <p>Not every problem deserves attention. We rank issues by money at risk, frequency, fix effort, and strength of evidence, then start with the clearest measurable target.</p>
+        <div class="equation" aria-label="Issue priority factors">
+          <span>Priority</span>
+          <strong>Money at risk • frequency • fix effort • evidence</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="lead-fix" class="scene" data-scene="3">
+      <div class="scene-copy">
+        <p class="step"><span>03</span> Fix</p>
+        <h2>Fix one revenue leak first.</h2>
+        <p>Lead Fix is the first wedge: one agreed lead-flow workflow problem, diagnosed and repaired for a fixed price. No giant transformation project. No vague AI retainer.</p>
+        <div class="price-line">
+          <span>Lead Fix</span>
+          <strong>$499</strong>
+          <small>one agreed workflow fix</small>
+        </div>
+        <a class="text-link" href="https://calendly.com/aioutreachadmin/30min?utm_source=niterunlabs_site&utm_campaign=lead_fix" target="_blank" rel="noreferrer">Start with Lead Fix <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section id="proof" class="scene" data-scene="4">
+      <div class="scene-copy scene-copy-right">
+        <p class="step"><span>04</span> Verify</p>
+        <h2>Proof beats promises.</h2>
+        <p>Before the fix, we freeze the baseline. After the fix, we compare the observed outcome. If the result does not show up in the numbers, we do not count it.</p>
+        <div class="proof-strip" role="list" aria-label="Evidence progression">
+          <span role="listitem">Baseline</span>
+          <i aria-hidden="true"></i>
+          <span role="listitem">Intervention</span>
+          <i aria-hidden="true"></i>
+          <span role="listitem">Observed outcome</span>
+          <i aria-hidden="true"></i>
+          <span role="listitem">Learning</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="expand" class="scene" data-scene="5">
+      <div class="scene-copy">
+        <p class="step"><span>05</span> Expand</p>
+        <h2>Scale what proves itself.</h2>
+        <p>Once a change produces a verified result, the winning process can be repeated and expanded. The goal is simple: keep what works, remove what does not, and make the next decision from real outcomes.</p>
+        <div class="loop" aria-label="Improvement cycle">
+          <span>Find</span><span>Fix</span><span>Measure</span><span>Repeat</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="scan" class="scene scene-final" data-scene="6">
+      <div class="scene-copy final-copy">
+        <p class="eyebrow">Start with the business, not the software</p>
+        <h2>What is your business leaving on the table?</h2>
+        <p class="lede">Enter a company name or website. We will carry it into the diagnostic flow and start with the highest-value question.</p>
+
+        <form class="scan-form" data-scan-form>
+          <label class="sr-only" for="business-input">Business name or website</label>
+          <input id="business-input" name="business" type="text" inputmode="url" autocomplete="organization" placeholder="yourbusiness.com" required />
+          <button type="submit">Start the scan</button>
+        </form>
+
+        <div class="scan-result" data-scan-result hidden>
+          <p class="scan-status"><span aria-hidden="true"></span> Diagnostic context staged</p>
+          <h3 data-scan-title>Your business is ready for the first-pass review.</h3>
+          <p>No revenue claim is generated without data. The next step is a live diagnostic to identify the clearest measurable leak, estimate its economic impact, and choose one practical fix to test first.</p>
+          <a class="button button-primary" data-book-link href="https://calendly.com/aioutreachadmin/30min?utm_source=niterunlabs_site&utm_campaign=business_scan" target="_blank" rel="noreferrer">Book the 30-minute diagnostic</a>
+        </div>
+
+        <p class="fine-print">No fake ROI. No hidden automation. Assumptions stay labeled until evidence verifies them.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <span>NiteRun Labs</span>
+      <small>Build. Test. Measure. Learn.</small>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="#observe">System</a>
+      <a href="#lead-fix">Lead Fix</a>
+      <a href="#proof">Proof</a>
+      <a href="https://calendly.com/aioutreachadmin/30min?utm_source=niterunlabs_site&utm_campaign=footer" target="_blank" rel="noreferrer">Contact</a>
+    </nav>
+  </footer>
+
+  <script>
+(() => {
+  'use strict';
+  const $ = s => document.querySelector(s);
+  const canvas = $('#world');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const scenes = [...document.querySelectorAll('[data-scene]')];
+  const progress = $('[data-progress]');
+  const header = $('[data-header]');
+  const menuBtn = $('[data-menu-button]');
+  const menu = $('[data-mobile-menu]');
+  const form = $('[data-scan-form]');
+  const result = $('[data-scan-result]');
+  const title = $('[data-scan-title]');
+  const book = $('[data-book-link]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const P = { bg:'#070706', ink:'#eee9df', muted:'#6f6a61', line:'#2a2721', accent:'#d9bd7c', danger:'#bc704f' };
+  const stages = [
+    ['Traffic',-4.4,4,.7],['Leads',3.4,10,1],['Calls',-2.2,16,1.35],
+    ['Appointments',3.8,22,.9],['Estimates',-3,28,1.2],['Sales',3,34,1.55],['Revenue',0,41,2]
+  ];
+  let W=1,H=1,D=1,target=0,smooth=0,last=performance.now();
+
+  function resize(){
+    D=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+    canvas.width=Math.round(W*D); canvas.height=Math.round(H*D);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    ctx.setTransform(D,0,0,D,0,0);
+  }
+  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const mix=(a,b,t)=>a+(b-a)*t;
+  const ease=t=>{t=clamp(t);return t*t*(3-2*t)};
+  function scrollP(){return clamp(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));}
+  function camera(p){
+    const z=mix(-17,37,ease(p));
+    return { z, x:Math.sin(p*Math.PI*4.2)*1.15, y:-3.7-Math.cos(p*Math.PI*2)*.35 };
+  }
+  function project(x,y,z,c){
+    const dz=z-c.z; if(dz<1.1)return null;
+    const f=Math.min(W,H)*.86, s=f/dz;
+    return { x:W*.53+(x-c.x)*s, y:H*.58+(y-c.y)*s, s, z:dz };
+  }
+  function line(a,b,c,color,alpha=.4,w=1){
+    const A=project(...a,c),B=project(...b,c); if(!A||!B)return;
+    ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();ctx.globalAlpha=1;
+  }
+  function cube(stage,i,c,focus,t){
+    const [name,x,z,h]=stage,p=project(x,3.2-h,z,c); if(!p)return;
+    const active=i===focus, passed=i<focus, size=clamp(p.s*.22,8,64), tall=size*(.6+h*.26);
+    ctx.globalAlpha=active?1:(passed?.48:.68);
+    ctx.fillStyle=active?'#201b10':'#11100d';
+    ctx.fillRect(p.x-size/2,p.y-tall,size,tall);
+    ctx.strokeStyle=active?P.accent:'#302c24';ctx.lineWidth=1;ctx.strokeRect(p.x-size/2,p.y-tall,size,tall);
+    ctx.fillStyle=active?P.accent:P.ink;const m=clamp(size*.1,3,8);ctx.fillRect(p.x-m/2,p.y-tall-m*1.6,m,m);
+    if(i===4){ctx.strokeStyle=P.danger;ctx.globalAlpha=active?.95:.42;ctx.beginPath();ctx.arc(p.x,p.y-tall-m, m*2.2*(1+Math.sin(t*.004)*.12),0,Math.PI*2);ctx.stroke();}
+    if(active&&W>760){ctx.globalAlpha=.9;ctx.fillStyle=P.ink;ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillText(name.toUpperCase(),p.x,p.y-tall-m*3.1);}
+    ctx.globalAlpha=1;
+  }
+  function draw(p,t){
+    const c=camera(p),focus=Math.min(stages.length-1,Math.floor(p*stages.length+.3));
+    ctx.fillStyle=P.bg;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#0d0c0a';ctx.globalAlpha=.7;ctx.fillRect(0,H*.64,W,H*.36);ctx.globalAlpha=1;
+    for(let z=Math.max(0,Math.floor(c.z/3)*3);z<54;z+=3){
+      for(let x=-13;x<=13;x+=2.6){
+        const y=3.9+Math.sin(x*.52+z*.19)*.25+Math.cos(z*.31)*.18,q=project(x,y,z,c);if(!q||q.y<H*.37||q.y>H+5)continue;
+        ctx.globalAlpha=.24;ctx.fillStyle=P.line;const s=clamp(q.s*.018,.55,1.7);ctx.fillRect(q.x,q.y,s,s);
+      }
+    }
+    ctx.globalAlpha=1;
+    for(let i=0;i<stages.length-1;i++){
+      const a=stages[i],b=stages[i+1],hot=i<=focus;
+      line([a[1],3.72,a[2]],[b[1],3.72,b[2]],c,hot?P.accent:P.line,hot?.45:.28,hot?1.3:1);
+    }
+    [...stages].map((s,i)=>({s,i})).sort((a,b)=>b.s[2]-a.s[2]).forEach(o=>cube(o.s,o.i,c,focus,t));
+  }
+  function sync(){
+    target=scrollP();progress.style.transform=`scaleX(${target})`;header.classList.toggle('is-scrolled',scrollY>24);
+    const mark=innerHeight*.48;let active=0;
+    scenes.forEach((s,i)=>{const r=s.getBoundingClientRect();if(r.top<=mark&&r.bottom>=mark)active=i;});
+    scenes.forEach((s,i)=>s.classList.toggle('is-active',i===active||(i===0&&scrollY<120)));
+  }
+  function frame(now){
+    const dt=Math.min(34,now-last);last=now;smooth=mix(smooth,target,reduce?1:1-Math.pow(.0008,dt/1000));draw(smooth,now);requestAnimationFrame(frame);
+  }
+  function toggle(force){
+    const open=typeof force==='boolean'?force:!menu.classList.contains('is-open');
+    menu.classList.toggle('is-open',open);menu.setAttribute('aria-hidden',String(!open));menuBtn.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':'';
+  }
+  menuBtn.addEventListener('click',()=>toggle());
+  menu.addEventListener('click',e=>{if(e.target.closest('a'))toggle(false);});
+  addEventListener('keydown',e=>{if(e.key==='Escape')toggle(false);});
+  form.addEventListener('submit',e=>{
+    e.preventDefault();const value=form.elements.business.value.trim();if(!value)return;
+    title.textContent=`${value} is ready for the first-pass review.`;
+    const u=new URL(book.href);u.searchParams.set('utm_content',value.slice(0,80));book.href=u.toString();
+    result.hidden=false;result.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+    try{localStorage.setItem('nrl_scan_business',value);}catch(_){ }
+  });
+  try{const v=localStorage.getItem('nrl_scan_business');if(v)$('#business-input').value=v;}catch(_){ }
+  addEventListener('scroll',sync,{passive:true});addEventListener('resize',()=>{resize();sync();},{passive:true});
+  resize();sync();requestAnimationFrame(frame);
+})();
+
+  </script>
+</body>
+</html>
