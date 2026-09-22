@@ -19,6 +19,12 @@ body:before{content:"";position:fixed;width:520px;height:520px;border-radius:50%
 .review-hero{border:1px solid #242329;background:linear-gradient(145deg,#191612,#111115);border-radius:22px;padding:25px 28px;display:flex;align-items:center;justify-content:space-between}.review-hero h2{font-size:28px;margin:5px 0 7px}.review-hero p{color:#938f89;font-size:10px;line-height:1.5;max-width:760px}.ring{width:105px;height:105px;border-radius:50%;background:conic-gradient(var(--orange) 0deg,#29282d 0deg);display:grid;place-items:center;position:relative;flex:none}.ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#151419}.ring b{position:relative;z-index:1;font-size:31px}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.card{border:1px solid #242329;background:#131317;border-radius:18px;padding:19px}.card.wide{grid-column:1/-1}.card h3{font-size:15px;margin:0 0 13px}.scoreline{display:grid;grid-template-columns:110px 1fr 40px;gap:9px;align-items:center;margin:10px 0;font-size:9px;color:#aaa59f}.bar{height:5px;background:#29282d;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));width:0}.feedback{font-size:8px;color:#777;margin:-4px 0 10px 119px;line-height:1.4}.focuses{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.focus{border:1px solid #29282e;background:#19191e;border-radius:13px;padding:13px}.focus b{font-size:10px;color:#ff9b55}.focus strong{display:block;font-size:11px;margin-top:6px}.focus p{font-size:9px;color:#8e8a84;line-height:1.45}.focus em{font-size:8px;color:#ff9b55;font-style:normal;font-weight:850}.lines{margin:0;padding-left:18px;color:#aaa59f;font-size:10px;line-height:1.65}.review-actions{display:flex;gap:8px;margin-top:14px}
 @media(max-width:900px){.shell{grid-template-columns:1fr}.side{display:none}.top{height:68px;padding:0 16px}main{padding:18px}.hero{grid-template-columns:1fr}.orange{padding:25px}.orange h2{font-size:32px}.stats{grid-template-columns:1fr 1fr}.stat b{font-size:35px}.drills{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}.call-grid{grid-template-columns:1fr;height:auto;min-height:0}.call-panel{height:73vh;min-height:540px}.coach{display:none}.review-grid{grid-template-columns:1fr}.card.wide{grid-column:auto}.focuses{grid-template-columns:1fr}}
 @media(max-width:560px){.drills,.grid,.stats{grid-template-columns:1fr}.wide{grid-column:auto}.free-row,.setup-foot{align-items:stretch;flex-direction:column}.orange h2{font-size:28px}.prospect{grid-template-columns:auto 1fr}.mood{display:none}.dock{grid-template-columns:auto 1fr}.dock>.btn{grid-column:1/-1}.review-hero{align-items:flex-start;gap:10px}.ring{width:82px;height:82px}.ring b{font-size:24px}.bubble{max-width:88%}}
+
+/* v8 free human AI */
+.human-ai-card{grid-column:1/-1;border:1px solid rgba(255,107,0,.32);background:linear-gradient(135deg,rgba(255,107,0,.11),rgba(255,107,0,.025));border-radius:15px;padding:15px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:15px;align-items:center}
+.human-ai-card strong{display:block;font-size:12px;color:#f4eee8}.human-ai-card p{margin:5px 0 0;font-size:9px;line-height:1.5;color:#918a84}.human-ai-actions{display:flex;align-items:center;gap:8px}.human-ai-progress{grid-column:1/-1;height:7px;background:#252429;border-radius:999px;overflow:hidden}.human-ai-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));border-radius:inherit;transition:width .25s}.human-ai-status{grid-column:1/-1;color:#a09a94;font-size:9px;min-height:15px}.human-ai-status.ok{color:#6fdda6}.human-ai-status.bad{color:#ff9096}.brain-badge{display:inline-flex;align-items:center;gap:6px;font-size:8px;font-weight:900;letter-spacing:.08em;color:#ff9d59;border:1px solid rgba(255,107,0,.24);background:rgba(255,107,0,.08);border-radius:999px;padding:5px 7px}.brain-badge.ready{color:#77dda9;border-color:#315943;background:#13251a}.thinking-dots{display:inline-flex;gap:3px;margin-left:5px}.thinking-dots i{width:3px;height:3px;background:currentColor;border-radius:50%;animation:thinkdot 1s infinite}.thinking-dots i:nth-child(2){animation-delay:.14s}.thinking-dots i:nth-child(3){animation-delay:.28s}@keyframes thinkdot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-2px)}}.model-note{font-size:8px;color:#68635f;margin-top:5px}.local-ai-label{display:flex;align-items:center;gap:7px}
+@media(max-width:700px){.human-ai-card{grid-template-columns:1fr}.human-ai-actions{width:100%}.human-ai-actions .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -72,8 +78,25 @@ body:before{content:"";position:fixed;width:520px;height:520px;border-radius:50%
       <div class="field"><label>DIFFICULTY</label><select id="difficulty"><option>Warmup</option><option selected>Realistic</option><option>Hard</option><option>Nightmare</option></select></div>
       <div class="field wide hidden" id="customWrap"><label>CUSTOM PRODUCT / SERVICE</label><input id="customOffer" placeholder="e.g. commercial cleaning, payroll, web design"></div>
       <div class="field"><label>TARGET BUYER</label><select id="buyer"><option>home services owner</option><option>small business owner</option><option>restaurant owner</option><option>dental practice owner</option><option>general contractor</option><option>insurance agency owner</option><option>operations manager</option></select></div>
-      <div class="field"><label>BUSINESS OWNER VOICE</label><select id="voiceSelect"><option value="auto">Best available system voice</option></select></div>
-      <div class="free-row"><div><strong>Free browser voice is ready — no account connection required.</strong><small>CallForge uses your browser's speech recognition and system voices. On Safari/Chrome, microphone access may use the browser vendor's speech service, but there is no OpenAI API key or OpenAI API billing.</small></div><span class="free-pill">FREE</span></div>
+      <div class="field"><label>BUSINESS OWNER VOICE</label><select id="voiceSelect"><option value="af_heart">Maya — natural / warm</option><option value="af_bella">Bella — confident / direct</option><option value="am_michael">Michael — grounded / male</option><option value="am_fenrir">Fenrir — firm / male</option></select></div>
+      <div class="field"><label>CONVERSATION BRAIN</label><select id="brainMode">
+        <option value="human" selected>Free Human AI — local model</option>
+        <option value="instant">Instant fallback — rule engine</option>
+      </select></div>
+
+      
+      <div class="human-ai-card" id="humanAiCard">
+        <div>
+          <div class="local-ai-label"><span class="brain-badge" id="brainBadge">FREE LOCAL AI</span><strong>Human Mode: a real local language model + neural voice</strong></div>
+          <p>The first use downloads open models to this browser and caches them. No API key, no subscription, no per-call charge. The buyer generates a fresh response from your exact words and the full call history.</p>
+          <div class="model-note">Recommended on a modern Mac with WebGPU. First load can take a few minutes depending on internet speed.</div>
+        </div>
+        <div class="human-ai-actions"><button class="btn secondary" id="loadHumanBtn" type="button">Load Free Human AI</button></div>
+        <div class="human-ai-progress"><span id="humanProgress"></span></div>
+        <div class="human-ai-status" id="humanStatus">Not loaded yet. CallForge will load it automatically when you start a Human Mode call.</div>
+      </div>
+
+      <div class="free-row"><div><strong>Still $0 — the upgraded AI runs on your own device.</strong><small>Speech recognition uses your browser. Human Mode adds an open local language model for unique replies and Kokoro neural TTS for a much more natural business-owner voice. Nothing here requires an OpenAI API key.</small></div><span class="free-pill">NO BILLING</span></div>
     </div>
     <div class="setup-foot"><div class="note"><b>Best experience:</b> headphones + a quiet room. Speak naturally and let the buyer finish. If speech recognition is unavailable in your browser, the typing box remains usable.</div><button class="btn orangebtn" id="start">Start practice call →</button></div>
   </section>
@@ -392,5 +415,341 @@ $("#randomize").onclick=()=>{const ps=["busy","skeptical","annoyed","analytical"
 $("#quickStart").onclick=startCall;$("#start").onclick=startCall;
 window.addEventListener("beforeunload",cleanup);renderStats();loadVoices();
 </script>
+
+<script>
+(function(){
+  var humanAI = {
+    llm:null, tts:null, ready:false, loading:false, llmReady:false, ttsReady:false,
+    modelId:"Llama-3.2-1B-Instruct-q4f16_1-MLC", audioEl:null, lastReplies:[]
+  };
+
+  var baseRespond = respond;
+  var baseSpeakBuyer = speakBuyer;
+  var baseCleanup = cleanup;
+  var baseStartCall = startCall;
+  var baseOpeningLine = openingLine;
+
+  try { if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = null; } catch(e) {}
+
+  function humanMode(){
+    var el = document.getElementById("brainMode");
+    return !!el && el.value === "human";
+  }
+  function setHumanStatus(text, cls){
+    var el = document.getElementById("humanStatus");
+    if(!el) return;
+    el.textContent = text;
+    el.className = "human-ai-status" + (cls ? " " + cls : "");
+  }
+  function setHumanProgress(p){
+    var el = document.getElementById("humanProgress");
+    if(el) el.style.width = Math.max(0, Math.min(100, p || 0)) + "%";
+  }
+  function setBrainBadge(text, ready){
+    var el = document.getElementById("brainBadge");
+    if(!el) return;
+    el.textContent = text;
+    el.className = "brain-badge" + (ready ? " ready" : "");
+  }
+  function sleep(ms){ return new Promise(function(resolve){ setTimeout(resolve, ms); }); }
+
+  async function loadHumanAI(){
+    if(humanAI.ready) return true;
+    if(humanAI.loading){
+      while(humanAI.loading) await sleep(250);
+      return humanAI.ready;
+    }
+    humanAI.loading = true;
+    var btn = document.getElementById("loadHumanBtn");
+    if(btn){ btn.disabled = true; btn.textContent = "Loading…"; }
+    setBrainBadge("LOADING LOCAL AI", false);
+    try{
+      if(!("gpu" in navigator)){
+        throw new Error("This browser does not expose WebGPU. Human Mode needs WebGPU for the local conversation brain. Try current Chrome or Edge on this Mac.");
+      }
+
+      setHumanStatus("Loading the local conversation brain. The first download is the slow part; later visits use the browser cache.");
+      setHumanProgress(2);
+
+      var webllm = await import("https://esm.run/@mlc-ai/web-llm");
+      humanAI.llm = await webllm.CreateMLCEngine(humanAI.modelId, {
+        initProgressCallback:function(report){
+          var p = report && typeof report.progress === "number" ? Math.round(report.progress * 72) : 8;
+          setHumanProgress(Math.max(3,p));
+          var txt = report && report.text ? report.text : "Downloading local language model…";
+          setHumanStatus("Brain: " + txt);
+        }
+      });
+      humanAI.llmReady = true;
+      setHumanProgress(74);
+      setHumanStatus("Brain ready. Loading the natural neural voice…");
+
+      var kokoro = await import("https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm");
+      humanAI.tts = await kokoro.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX", {
+        dtype:"q8",
+        device:"wasm"
+      });
+      humanAI.ttsReady = true;
+      humanAI.ready = true;
+      setHumanProgress(100);
+      setBrainBadge("HUMAN AI READY", true);
+      setHumanStatus("Ready. Responses are now generated from the exact conversation and spoken with the local neural voice.", "ok");
+      if(btn){ btn.textContent = "Human AI Ready"; btn.disabled = true; }
+      return true;
+    }catch(err){
+      console.error("CallForge Human Mode load failed", err);
+      humanAI.ready = false;
+      setBrainBadge("LOCAL AI UNAVAILABLE", false);
+      setHumanStatus((err && err.message ? err.message : String(err)) + " The instant free fallback still works.", "bad");
+      if(btn){ btn.disabled = false; btn.textContent = "Try Again"; }
+      return false;
+    }finally{
+      humanAI.loading = false;
+    }
+  }
+
+  function observeSeller(text){
+    var c = classify(text);
+    state.turn++;
+    if(c.permission){ state.flags.permission = true; state.trust += 5; state.patience += 2; }
+    if(c.relevance){ state.flags.relevance = true; state.trust += 3; }
+    if(c.current && c.isQ && !state.flags.current){ state.flags.current = true; state.discovery += 12; state.trust += 4; }
+    if(c.pain && c.isQ && !state.flags.pain){ state.flags.pain = true; state.discovery += 20; state.trust += 6; }
+    if(c.impact && c.isQ && !state.flags.impact){ state.flags.impact = true; state.discovery += 22; state.trust += 7; }
+    if(c.goal && c.isQ && !state.flags.goal){ state.flags.goal = true; state.discovery += 12; state.trust += 4; }
+    if(c.decision && c.isQ && !state.flags.decision){ state.flags.decision = true; state.discovery += 8; }
+    if(c.budget && c.isQ){ state.flags.price = true; }
+    if(c.close){ state.flags.close = true; if(c.specificClose) state.flags.specificClose = true; }
+    if(c.wc > 55){ state.patience -= 13; state.trust -= 3; }
+    else if(c.wc > 38){ state.patience -= 6; }
+    if(c.pitch && state.discovery < 24){ state.patience -= 7; state.trust -= 4; }
+    if(state.lastObjection && c.empathy && c.isQ){
+      state.objectionsHandled++;
+      state.lastObjection = null;
+      state.trust += 9;
+      state.patience += 3;
+    }
+    state.trust = Math.max(0, Math.min(100, state.trust));
+    state.patience = Math.max(0, Math.min(100, state.patience));
+    return c;
+  }
+
+  function systemPrompt(){
+    var p = state.profile || {};
+    var persona = {
+      busy:"busy, practical, time-sensitive, and impatient with fluff",
+      skeptical:"skeptical, experienced, and quick to challenge vague claims",
+      annoyed:"already annoyed by the unsolicited interruption and willing to end the call quickly",
+      hostile:"blunt and guarded, but still believable rather than cartoonishly rude",
+      analytical:"analytical, specific, and unwilling to accept unsupported ROI claims",
+      price:"cost-conscious and focused on risk, switching cost, and whether this is worth paying for",
+      friendly:"friendly and conversational but not automatically interested"
+    }[state.persona] || "busy and practical";
+
+    return [
+      "You are " + (p.name || "a business owner") + ", the real owner/operator of " + (p.company || "a small business") + ".",
+      "You are on an unsolicited cold call. Stay in character as the prospect only. Never coach the seller, never mention AI, roleplay, prompts, scores, or training.",
+      "The seller is trying to sell: " + state.offerLabel + ". You are a " + state.buyer + ".",
+      "PERSONALITY: " + persona + ". Difficulty: " + state.difficulty + ".",
+      "YOUR PRIVATE REALITY (do not dump this all at once):",
+      "- What you were doing when called: " + (p.context || "working"),
+      "- Current setup: " + (p.current || "a mix of tools and manual work"),
+      "- Real pain: " + (p.pain || "operational inefficiency"),
+      "- Real impact: " + (p.impact || "lost time"),
+      "- Goal: " + (p.goal || "make the business run more smoothly"),
+      "- Decision process: " + (p.decision || "you make the decision"),
+      "- Money attitude: " + (p.budget || "you will spend only if value is clear"),
+      "BEHAVIOR:",
+      "- Respond to the seller's exact latest words and remember the full call. Reference specific things they said when natural.",
+      "- Do not choose from a canned objection list. Think through what a real owner would say next.",
+      "- Do not repeat an objection after it has been handled. Move to the next real concern or move the conversation forward.",
+      "- Reveal private details only when the seller earns them with a relevant question. One layer at a time.",
+      "- Challenge vague claims, buzzwords, fake urgency, unexplained ROI, and long monologues.",
+      "- Most replies should be 4-32 spoken words, sometimes 1-3 short sentences. Never give a speech.",
+      "- Sound like a phone call: contractions, occasional fragments, mild hesitation, small corrections, and natural emotion are good. Do not use stage directions like *sighs*.",
+      "- If the seller is concise and relevant, gradually become more open. Never instantly become enthusiastic.",
+      "- If the seller rambles or ignores what you said, become less patient. On Nightmare difficulty, you may hang up.",
+      "- Only agree to a next step when the seller has earned enough relevance and trust.",
+      "- Return only the words you would actually say out loud. No labels and no quotation marks."
+    ].join("\n");
+  }
+
+  function cleanReply(s){
+    s = String(s || "").trim();
+    s = s.replace(/^(prospect|buyer|business owner|assistant)\s*:\s*/i,"");
+    s = s.replace(/\*[^*]{0,60}\*/g,"").trim();
+    s = s.replace(/^[\"'“”]+|[\"'“”]+$/g,"").trim();
+    var parts = s.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean);
+    if(parts.length > 2) s = parts.slice(0,2).join(" ");
+    var ws = s.split(/\s+/);
+    if(ws.length > 48) s = ws.slice(0,48).join(" ") + "…";
+    return s;
+  }
+  function similarity(a,b){
+    var A = new Set(String(a).toLowerCase().match(/[a-z0-9']+/g) || []);
+    var B = new Set(String(b).toLowerCase().match(/[a-z0-9']+/g) || []);
+    if(!A.size || !B.size) return 0;
+    var inter = 0; A.forEach(function(x){ if(B.has(x)) inter++; });
+    return inter / Math.max(A.size,B.size);
+  }
+  function looksLikeObjection(s){
+    return /\b(already|not interested|not looking|don't need|do not need|busy|no time|price|cost|expensive|send me|email me|tried|switch|why should|proof|evidence|contract|budget|concern|problem with that)\b/i.test(s);
+  }
+
+  async function generateHumanReply(){
+    var history = state.transcript.slice(-18).map(function(m){
+      return {role:m.role === "seller" ? "user" : "assistant", content:m.text};
+    });
+    var messages = [{role:"system",content:systemPrompt()}].concat(history);
+    var started = Date.now();
+    setVoiceStatus("Buyer thinking…","They are processing what you actually said.");
+    var result = await humanAI.llm.chat.completions.create({
+      messages:messages,
+      temperature:0.82,
+      top_p:0.92,
+      max_tokens:90,
+      frequency_penalty:0.25,
+      presence_penalty:0.12
+    });
+    var reply = cleanReply(result && result.choices && result.choices[0] && result.choices[0].message ? result.choices[0].message.content : "");
+    var repetitive = humanAI.lastReplies.some(function(x){ return similarity(x,reply) > 0.72; });
+    if(repetitive){
+      var retryMessages = messages.concat([{role:"system",content:"Your next reply must take a different angle from your last few responses. Do not repeat wording or the same objection. React specifically to the seller's latest sentence."}]);
+      var retry = await humanAI.llm.chat.completions.create({
+        messages:retryMessages, temperature:0.9, top_p:0.94, max_tokens:90, frequency_penalty:0.45
+      });
+      reply = cleanReply(retry && retry.choices && retry.choices[0] && retry.choices[0].message ? retry.choices[0].message.content : reply);
+    }
+    if(!reply) throw new Error("The local buyer returned an empty reply.");
+    humanAI.lastReplies.push(reply); humanAI.lastReplies = humanAI.lastReplies.slice(-7);
+    if(looksLikeObjection(reply) && reply !== state.lastObjection){
+      state.objectionsPresented++;
+      state.lastObjection = reply;
+    }
+    var elapsed = Date.now() - started;
+    if(elapsed < 650) await sleep(650 - elapsed + Math.floor(Math.random()*420));
+    return reply;
+  }
+
+  respond = async function(text){
+    if(!humanMode() || !humanAI.llmReady){
+      return baseRespond(text);
+    }
+    observeSeller(text);
+    try{
+      var reply = await generateHumanReply();
+      document.getElementById("mood").textContent = moodLabel();
+      var trust = document.getElementById("trustMeter");
+      if(trust) trust.style.width = Math.max(0,Math.min(100,state.trust)) + "%";
+      await speakBuyer(reply);
+    }catch(err){
+      console.error("Local LLM response failed", err);
+      setRuntime("Human brain hit a local error, so this turn is using the instant free fallback.", true);
+      return baseRespond(text);
+    }
+  };
+
+  speakBuyer = async function(text){
+    if(!humanMode() || !humanAI.ttsReady){
+      return baseSpeakBuyer(text);
+    }
+    add("buyer",text);
+    state.speaking = true;
+    stopRecognition();
+    setVoiceStatus("Buyer answering…","Natural neural voice • local on this device");
+    try{
+      if(humanAI.audioEl){ try{humanAI.audioEl.pause();}catch(e){} }
+      await sleep(320 + Math.floor(Math.random()*380));
+      var voice = (document.getElementById("voiceSelect") || {}).value || "af_heart";
+      var raw = await humanAI.tts.generate(text, {voice:voice, speed:0.94});
+      var url = URL.createObjectURL(raw.toBlob());
+      var audio = new Audio(url);
+      humanAI.audioEl = audio;
+      await new Promise(function(resolve,reject){
+        audio.onended = resolve;
+        audio.onerror = function(){ reject(new Error("Neural audio playback failed")); };
+        var p = audio.play();
+        if(p && p.catch) p.catch(reject);
+      });
+      URL.revokeObjectURL(url);
+    }catch(err){
+      console.error("Kokoro voice failed", err);
+      state.speaking = false;
+      return baseSpeakBuyer(text);
+    }
+    state.speaking = false;
+    setVoiceStatus("Your turn","Answer naturally. The buyer remembers the conversation.");
+    setTimeout(startRecognition,240);
+  };
+
+  openingLine = function(){
+    if(!humanMode() || !state.profile) return baseOpeningLine();
+    var first = (state.profile.name || "Chris").split(" ")[0];
+    var ctx = state.profile.context || "in the middle of work";
+    if(state.persona === "annoyed") return pick([
+      "Yeah, " + first + " here. I'm " + ctx + "—what do you need?",
+      "Hello? Look, I'm " + ctx + ". If this is sales, make it quick.",
+      "Yeah? " + first + " speaking. I'm a little slammed—what's this about?"
+    ]);
+    if(state.persona === "busy" || state.persona === "hostile") return pick([
+      "Yeah, " + first + " here. I'm " + ctx + ". You've got about thirty seconds.",
+      "Hey, this is " + first + ". I'm " + ctx + "—what's up?",
+      "Yeah? I'm in between things. What's the reason for the call?"
+    ]);
+    return pick([
+      "Hey, this is " + first + ". What's this regarding?",
+      "Yeah, " + first + " speaking. Give me the short version.",
+      "Hello? What are you calling about?"
+    ]);
+  };
+
+  cleanup = function(){
+    if(humanAI.audioEl){ try{humanAI.audioEl.pause();}catch(e){} humanAI.audioEl = null; }
+    return baseCleanup();
+  };
+
+  async function enhancedStart(){
+    var mode = document.getElementById("brainMode");
+    if(mode && mode.value === "human" && !humanAI.ready){
+      var ok = await loadHumanAI();
+      if(!ok){
+        mode.value = "instant";
+        setHumanStatus("Human Mode could not load, so this call will use the instant free fallback. You can try again later.", "bad");
+      }
+    }
+    return baseStartCall();
+  }
+
+  var loadBtn = document.getElementById("loadHumanBtn");
+  if(loadBtn) loadBtn.onclick = loadHumanAI;
+  var startBtn = document.getElementById("start");
+  var quickBtn = document.getElementById("quickStart");
+  var againBtn = document.getElementById("again");
+  if(startBtn) startBtn.onclick = enhancedStart;
+  if(quickBtn) quickBtn.onclick = enhancedStart;
+  if(againBtn) againBtn.onclick = enhancedStart;
+
+  var voiceSelect = document.getElementById("voiceSelect");
+  if(voiceSelect){
+    voiceSelect.innerHTML =
+      '<option value="af_heart">Maya — warm, very natural</option>' +
+      '<option value="af_bella">Bella — confident, direct</option>' +
+      '<option value="am_michael">Michael — grounded male</option>' +
+      '<option value="am_fenrir">Fenrir — firm male</option>';
+  }
+
+  var brainMode = document.getElementById("brainMode");
+  if(brainMode){
+    brainMode.onchange = function(){
+      if(brainMode.value === "human" && humanAI.ready){
+        setHumanStatus("Human Mode ready. The buyer will generate fresh replies from the call history.", "ok");
+      }else if(brainMode.value === "instant"){
+        setHumanStatus("Instant fallback selected. This uses the fast rule engine and system voice.");
+      }
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
