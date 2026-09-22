@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ff6b00">
+<title>CallForge — AI Cold Call Trainer</title>
+<style>
+:root{--bg:#09090b;--panel:#121216;--panel2:#19191f;--line:#2a292f;--text:#f7f5f2;--muted:#96918b;--orange:#ff6b00;--orange2:#ff963f;--green:#46d59a;--red:#ff6972;--yellow:#ffd05b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+body:before{content:"";position:fixed;width:500px;height:500px;border-radius:50%;background:#ff6b00;filter:blur(120px);opacity:.11;right:-220px;top:-230px;pointer-events:none}
+.shell{min-height:100vh;display:grid;grid-template-columns:220px 1fr}.side{border-right:1px solid #1d1d21;background:#0c0c0f;padding:24px 16px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;gap:11px;align-items:center;padding:0 7px}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,var(--orange2),var(--orange));display:grid;place-items:center;color:#180900;font-size:21px;font-weight:900;box-shadow:0 10px 30px #ff6b0033}.brand strong{font-size:18px;letter-spacing:-.04em}.brand small{display:block;color:#77726c;font-size:8px;letter-spacing:.16em;font-weight:800;margin-top:2px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#99958f;text-align:left;border-radius:11px;padding:11px 12px;font-weight:700}.nav button.active{background:#2c160d;color:#ff9d59}.sidecard{border:1px solid #242329;border-radius:16px;padding:14px;background:#121216}.sidecard small{color:#77736d;font-size:9px;font-weight:800;letter-spacing:.12em}.sidecard strong{display:block;margin-top:8px;font-size:20px}.sidefooter{margin-top:auto;color:#57534f;font-size:9px;padding:0 7px}
+.main{min-width:0}.top{height:82px;border-bottom:1px solid #1d1d21;display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;background:#09090be8;backdrop-filter:blur(16px);z-index:5}.eyebrow{font-size:9px;color:#ff9850;font-weight:900;letter-spacing:.15em}.top h1{font-size:16px;margin:4px 0 0;letter-spacing:-.02em}.status{border:1px solid #26252a;background:#131317;color:#a5a19b;border-radius:999px;padding:8px 11px;display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700}.dot{width:7px;height:7px;border-radius:50%;background:#777}.status.ok .dot{background:var(--green);box-shadow:0 0 0 4px #46d59a12}.status.warn .dot{background:var(--yellow)}main{max-width:1320px;margin:0 auto;padding:30px}
+.hero{display:grid;grid-template-columns:1.7fr .65fr;gap:16px}.orange{background:linear-gradient(135deg,#ff831f,#ff5c00 68%,#d94400);border-radius:24px;color:#1d0b02;padding:34px;position:relative;overflow:hidden;box-shadow:0 30px 70px #ff5f001a}.orange:after{content:"";position:absolute;width:320px;height:320px;border:1px solid #ffffff3d;border-radius:50%;right:-150px;top:-160px;box-shadow:0 0 0 40px #ffffff0b,0 0 0 80px #ffffff07}.orange>*{position:relative;z-index:1}.badge{display:inline-flex;border:1px solid #37150722;background:#37150713;border-radius:999px;padding:6px 8px;font-size:9px;font-weight:900;letter-spacing:.12em}.orange h2{font-size:40px;line-height:1.01;letter-spacing:-.05em;margin:16px 0 11px;max-width:720px}.orange p{max-width:690px;line-height:1.55;font-size:13px;font-weight:560;color:#2b1008bb}.actions{display:flex;gap:9px;margin-top:22px;flex-wrap:wrap}.btn{min-height:43px;border:0;border-radius:11px;padding:0 15px;font-size:11px;font-weight:850}.btn.dark{background:#15110f;color:#fff}.btn.light{background:#ffffff32;border:1px solid #ffffff44;color:#241005}.btn.orangebtn{background:linear-gradient(135deg,var(--orange2),var(--orange));color:#1c0b02}.btn.secondary{background:#1b1b20;color:#ddd7d1;border:1px solid #2c2b31}.btn.danger{background:#2a1619;color:#ff9aa0;border:1px solid #54252a}.stats{display:grid;gap:16px}.stat{border:1px solid #242329;border-radius:20px;background:linear-gradient(#151519,#101013);padding:20px}.stat small{color:#77726d;font-size:9px;font-weight:850;letter-spacing:.12em}.stat b{display:block;font-size:44px;letter-spacing:-.06em;margin-top:10px}.stat span{color:#77726d;font-size:10px}
+.sectiontitle{display:flex;align-items:end;justify-content:space-between;margin:28px 0 11px}.sectiontitle h3{font-size:18px;margin:4px 0 0}.sectiontitle span{color:#77736e;font-size:10px}.drills{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.drill{border:1px solid #242329;background:#131317;border-radius:15px;padding:14px;text-align:left;color:#e9e5e0}.drill:hover,.drill.active{border-color:#ff6b0066;background:#1d1714}.drill .ico{width:37px;height:37px;border-radius:11px;background:#232227;display:grid;place-items:center;color:#ff9850;font-weight:900;margin-bottom:11px}.drill strong{font-size:11px}.drill p{color:#77736d;font-size:9px;line-height:1.4;margin:5px 0 0}.drill.annoyed{background:linear-gradient(145deg,#211711,#141417);border-color:#ff6b003d}
+.setup{margin-top:20px;border:1px solid #242329;background:linear-gradient(#141418,#101013);border-radius:20px;padding:22px}.setuphead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.setuphead h3{margin:4px 0 0;font-size:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.field label{display:block;color:#99958f;font-size:9px;font-weight:800;margin-bottom:6px}.field select,.field input{width:100%;height:42px;border:1px solid #29282e;border-radius:10px;background:#0c0c0f;color:#eeeae5;padding:0 11px;font-size:11px}.wide{grid-column:span 2}.connect{grid-column:1/-1;border:1px solid #ff6b0033;background:#ff6b000d;border-radius:13px;padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:16px}.connect strong{display:block;font-size:12px}.connect small{display:block;color:#8b8781;font-size:9px;line-height:1.45;margin-top:4px;max-width:720px}.setupfoot{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:17px}.note{font-size:9px;color:#69655f;line-height:1.45}.note b{color:#8f8a83}
+.screen{display:none}.screen.active{display:block}.calltop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.live{font-size:9px;color:#ff9950;font-weight:900;letter-spacing:.13em}.clock{font-variant-numeric:tabular-nums;font-size:12px;font-weight:800}.callgrid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:13px;height:calc(100vh - 155px);min-height:590px}.callpanel,.coach{border:1px solid #242329;background:#111115;border-radius:20px;overflow:hidden}.callpanel{display:flex;flex-direction:column}.prospect{border-bottom:1px solid #242329;padding:17px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:#151519}.avatar{width:48px;height:48px;border-radius:15px;background:#332219;border:1px solid #ff995033;display:grid;place-items:center;color:#ff9c55;font-weight:900}.prospect h2{font-size:14px;margin:0}.prospect p{font-size:9px;color:#7f7a74;margin:4px 0 0}.mood{font-size:8px;border:1px solid #302f34;padding:5px 7px;border-radius:999px;color:#aaa59f}.runtime{padding:9px 14px;border-bottom:1px solid #ff6b002b;background:#ff6b000c;color:#bcb7b0;font-size:9px}.runtime.bad{background:#ff59610d;border-color:#ff596122;color:#ffb1b5}.transcript{flex:1;overflow:auto;padding:20px}.empty{height:100%;display:grid;place-items:center;text-align:center;color:#6e6a65;font-size:10px}.bubble{max-width:76%;border:1px solid #29282e;border-radius:14px;padding:11px 12px;margin:10px 0;font-size:12px;line-height:1.5}.buyer{background:#1a1a1f;border-top-left-radius:4px}.seller{margin-left:auto;background:#ff6b0017;border-color:#ff6b002e;border-top-right-radius:4px}.who{font-size:7px;letter-spacing:.12em;font-weight:900;color:#77736e;margin-bottom:4px}.seller .who{color:#ff9850}.dock{border-top:1px solid #242329;background:#151519;padding:13px 15px;display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center}.mic{width:50px;height:50px;border-radius:50%;border:0;background:linear-gradient(145deg,var(--orange2),var(--orange));font-size:18px;box-shadow:0 10px 28px #ff6b0033}.mic.muted{filter:grayscale(.7);opacity:.55}.voicecopy strong{display:block;font-size:10px}.voicecopy span{display:block;font-size:8px;color:#77736e;margin-top:3px}.typebox{display:flex;gap:6px;margin-top:7px}.typebox input{height:31px;max-width:340px;width:100%;background:#0d0d10;border:1px solid #2a292f;border-radius:8px;color:white;padding:0 9px;font-size:9px}.typebox button{height:31px;border:1px solid #333139;background:#202026;color:#bbb;border-radius:8px;font-size:8px;font-weight:800}.coach{display:flex;flex-direction:column}.coach section{padding:16px;border-bottom:1px solid #242329}.coach small{font-size:8px;color:#66625e;font-weight:900;letter-spacing:.13em}.coach h3{font-size:16px;margin:6px 0}.coach p{font-size:10px;color:#a49f99;line-height:1.5;margin:7px 0 0}.tip{font-size:13px!important;color:#eee9e4!important;font-weight:780}.meter{height:5px;background:#28272c;border-radius:99px;margin-top:9px;overflow:hidden}.meter span{display:block;height:100%;background:var(--orange);width:15%;transition:.25s}.coach .foot{margin-top:auto;border-bottom:0;color:#64605c;font-size:9px}
+.reviewhero{border:1px solid #242329;background:linear-gradient(145deg,#191612,#111115);border-radius:22px;padding:25px 28px;display:flex;justify-content:space-between;align-items:center}.reviewhero h2{font-size:28px;margin:5px 0 7px}.reviewhero p{color:#938f89;font-size:10px;line-height:1.5;max-width:750px}.ring{width:105px;height:105px;border-radius:50%;background:conic-gradient(var(--orange) 0deg,#29282d 0deg);display:grid;place-items:center;position:relative;flex:none}.ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#151419}.ring b{position:relative;z-index:1;font-size:31px}.reviewgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.card{border:1px solid #242329;background:#131317;border-radius:18px;padding:19px}.card.wide{grid-column:1/-1}.card h3{font-size:15px;margin:0 0 13px}.scoreline{display:grid;grid-template-columns:110px 1fr 35px;gap:9px;align-items:center;margin:10px 0;font-size:9px;color:#aaa59f}.bar{height:5px;background:#29282d;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));width:0}.focuses{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.focus{border:1px solid #29282e;background:#19191e;border-radius:13px;padding:13px}.focus b{font-size:10px;color:#ff9b55}.focus strong{display:block;font-size:11px;margin-top:6px}.focus p{font-size:9px;color:#8e8a84;line-height:1.45}.focus em{font-size:8px;color:#ff9b55;font-style:normal;font-weight:800}.lines{margin:0;padding-left:18px;color:#aaa59f;font-size:10px;line-height:1.6}.reviewactions{display:flex;gap:8px;margin-top:14px}
+.modalback{position:fixed;inset:0;background:#000b;backdrop-filter:blur(6px);z-index:20;display:grid;place-items:center;padding:20px}.modal{width:min(520px,100%);border:1px solid #302e33;background:#151519;border-radius:20px;padding:22px;box-shadow:0 40px 100px #0009}.modal h2{font-size:19px;margin:5px 0}.modal p{font-size:10px;color:#96918b;line-height:1.6}.modal input{width:100%;height:45px;border:1px solid #343238;background:#0d0d10;color:white;border-radius:11px;padding:0 12px;font-family:ui-monospace,monospace}.modal .row{display:flex;justify-content:space-between;gap:8px;margin-top:14px}.keymsg{min-height:18px;color:#9a958e;font-size:9px;margin-top:8px}.keymsg.ok{color:var(--green)}.keymsg.bad{color:#ff8a91}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.side{display:none}.top{height:68px;padding:0 16px}.main main{padding:18px}.hero{grid-template-columns:1fr}.orange{padding:25px}.orange h2{font-size:31px}.stats{grid-template-columns:1fr 1fr}.stat b{font-size:35px}.drills{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}.callgrid{grid-template-columns:1fr;height:auto;min-height:0}.callpanel{height:72vh;min-height:540px}.coach{display:none}.reviewgrid{grid-template-columns:1fr}.card.wide{grid-column:auto}.focuses{grid-template-columns:1fr}}
+@media(max-width:560px){.drills,.grid,.stats{grid-template-columns:1fr}.wide{grid-column:auto}.connect,.setupfoot{align-items:stretch;flex-direction:column}.orange h2{font-size:28px}.prospect{grid-template-columns:auto 1fr}.mood{display:none}.dock{grid-template-columns:auto 1fr}.dock>.btn{grid-column:1/-1}.reviewhero{align-items:flex-start;gap:10px}.ring{width:82px;height:82px}.ring b{font-size:24px}.bubble{max-width:88%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="side">
+ <div class="brand"><div class="logo">☎</div><div><strong>CallForge</strong><small>AI SALES TRAINER</small></div></div>
+ <div class="nav"><button class="active">⌂ &nbsp; Practice</button><button id="historySide">↗ &nbsp; Progress</button></div>
+ <div class="sidecard"><small>YOUR TRAINING</small><strong id="sideCalls">0 calls</strong><span style="font-size:9px;color:#777">Practice until objections feel normal.</span></div>
+ <div class="sidefooter">Realtime voice • v6 hosted</div>
+</aside>
+<div class="main">
+<header class="top"><div><div class="eyebrow">CALLFORGE LIVE</div><h1 id="topTitle">Train the call before you make the call.</h1></div><button class="status warn" id="statusBtn"><span class="dot"></span><span id="statusText">Connect AI voice</span></button></header>
+<main>
+<section class="screen active" id="home">
+ <div class="hero"><div class="orange"><div class="badge">REAL-TIME AI ROLEPLAY</div><h2>Practice against a buyer who actually reacts to you.</h2><p>Speak normally. The prospect hears your exact words, interrupts, pushes back, changes attitude, and only gives ground when you earn it.</p><div class="actions"><button class="btn dark" id="quickStart">Start a live call →</button><button class="btn light" id="annoyedQuick">Try annoyed owner</button></div></div>
+ <div class="stats"><div class="stat"><small>AVERAGE SCORE</small><b id="avg">—</b><span>out of 100</span></div><div class="stat"><small>BEST SCORE</small><b id="best">—</b><span id="callsLabel">0 calls completed</span></div></div></div>
+ <div class="sectiontitle"><div><div class="eyebrow">QUICK DRILLS</div><h3>Choose the pressure</h3></div><span>Real conversations, not canned objections</span></div>
+ <div class="drills">
+  <button class="drill active" data-persona="busy"><div class="ico">☎</div><strong>Busy owner</strong><p>You have 30 seconds to earn attention.</p></button>
+  <button class="drill" data-persona="skeptical"><div class="ico">?</div><strong>Skeptical operator</strong><p>Challenges vague claims and fake ROI.</p></button>
+  <button class="drill annoyed" data-persona="annoyed"><div class="ico">!</div><strong>Annoyed owner</strong><p>Already irritated that you called. Don't ramble.</p></button>
+  <button class="drill" data-persona="analytical"><div class="ico">∑</div><strong>Analytical buyer</strong><p>Wants clear reasoning, specifics, and proof.</p></button>
+ </div>
+ <section class="setup">
+  <div class="setuphead"><div><div class="eyebrow">CALL BUILDER</div><h3>Set the call</h3></div><button class="btn secondary" id="randomize">Randomize buyer</button></div>
+  <div class="grid">
+   <div class="field wide"><label>WHAT ARE YOU SELLING?</label><select id="offer"><option value="Business software and automation">Business software / automation</option><option value="Insurance for small businesses">Business insurance</option><option value="Marketing and lead generation services">Marketing / lead generation</option><option value="Recruiting and staffing services">Recruiting / staffing</option><option value="A premium pen">Sell me this pen</option><option value="custom">Custom offer</option></select></div>
+   <div class="field"><label>BUYER PERSONALITY</label><select id="persona"><option value="busy">Busy owner</option><option value="skeptical">Skeptical operator</option><option value="annoyed">Annoyed business owner</option><option value="hostile">Hard / impatient</option><option value="analytical">Analytical</option><option value="price">Price-focused</option><option value="friendly">Friendly but noncommittal</option></select></div>
+   <div class="field"><label>DIFFICULTY</label><select id="difficulty"><option>Warmup</option><option selected>Realistic</option><option>Hard</option><option>Nightmare</option></select></div>
+   <div class="field wide hidden" id="customWrap"><label>CUSTOM PRODUCT / SERVICE</label><input id="customOffer" placeholder="What exactly are you selling?"></div>
+   <div class="field"><label>TARGET BUYER</label><select id="buyer"><option>small business owner</option><option>home services owner</option><option>restaurant owner</option><option>dental practice owner</option><option>general contractor</option><option>insurance agency owner</option><option>operations manager</option></select></div>
+   <div class="field"><label>PROSPECT VOICE</label><select id="voice"><option value="cedar">Cedar — grounded / direct</option><option value="marin">Marin — conversational</option></select></div>
+   <div class="connect"><div><strong id="connectLabel">Connect natural AI voice</strong><small>Your API key is stored only for this browser session. CallForge sends it through this HTTPS backend to create the realtime session; it is not saved in the app or call history.</small></div><button class="btn secondary" id="connectBtn">Connect AI</button></div>
+  </div>
+  <div class="setupfoot"><div class="note"><b>Voice:</b> AI-generated realtime speech. Use headphones for the most phone-like experience and cleanest interruption handling.</div><button class="btn orangebtn" id="start">Start practice call →</button></div>
+ </section>
+</section>
+
+<section class="screen" id="call">
+ <div class="calltop"><button class="btn secondary" id="exit">← Exit</button><span class="live">● LIVE PRACTICE</span><span class="clock" id="clock">00:00</span></div>
+ <div class="callgrid">
+  <section class="callpanel">
+   <div class="prospect"><div class="avatar" id="avatar">BO</div><div><h2 id="prospectName">Business Owner</h2><p id="prospectMeta">Realtime prospect • listening to your exact words</p></div><span class="mood" id="mood">Neutral</span></div>
+   <div class="runtime" id="runtime">Connecting microphone and AI voice…</div>
+   <div class="transcript" id="transcript"><div class="empty" id="empty">The prospect will answer first. Treat this like a real call.</div></div>
+   <div class="dock"><button class="mic" id="mic">🎙</button><div class="voicecopy"><strong id="voiceStatus">Connecting…</strong><span id="voiceSub">Allow microphone access when your browser asks.</span><div class="typebox"><input id="typed" placeholder="Type a reply if needed"><button id="sendTyped">Send</button></div></div><button class="btn danger" id="hangup">End call</button></div>
+  </section>
+  <aside class="coach">
+   <section><small>AI COACH</small><h3 id="phase">Opening</h3><p class="tip" id="tip">Earn another 30 seconds before you pitch.</p><p id="reason">Give a concise reason for the call, then ask a real question.</p></section>
+   <section><small>CALL CONTROL</small><p>Discovery depth</p><div class="meter"><span id="discoveryMeter"></span></div><p>Seller talk pressure</p><div class="meter"><span id="talkMeter" style="background:#ff6972"></span></div></section>
+   <section><small>RULE RIGHT NOW</small><p class="tip" id="rule">Stay under 30–40 words and make the next sentence about them.</p></section>
+   <section class="foot">The coach watches your transcript. The buyer never sees these hints.</section>
+  </aside>
+ </div>
+</section>
+
+<section class="screen" id="review">
+ <div class="reviewhero"><div><div class="eyebrow">CALL REVIEW</div><h2 id="reviewTitle">Your feedback</h2><p id="summary">Analyzing the call…</p></div><div class="ring" id="ring"><b id="score">—</b></div></div>
+ <div class="reviewgrid">
+  <div class="card"><h3>Score breakdown</h3><div id="breakdown"></div></div>
+  <div class="card"><h3>What you did well</h3><ul class="lines" id="strengths"><li>Analyzing transcript…</li></ul></div>
+  <div class="card wide"><h3>Work on these next</h3><div class="focuses" id="focuses"></div></div>
+  <div class="card wide"><h3>Better wording from this exact call</h3><ul class="lines" id="better"></ul></div>
+ </div>
+ <div class="reviewactions"><button class="btn orangebtn" id="again">Practice again</button><button class="btn secondary" id="newScenario">Change scenario</button></div>
+</section>
+</main>
+</div>
+</div>
+
+<audio id="remoteAudio" autoplay playsinline></audio>
+
+<div class="modalback hidden" id="keyBack">
+ <div class="modal"><div class="eyebrow">NATURAL AI VOICE</div><h2>Connect CallForge</h2><p>Paste an OpenAI API key. CallForge uses it for the realtime voice call and post-call grading. It stays in <b>sessionStorage</b> for this tab/session and is not written into this site or your practice history.</p><input id="keyInput" type="password" placeholder="sk-..."><div class="keymsg" id="keyMsg"></div><div class="row"><button class="btn secondary" id="keyCancel">Cancel</button><button class="btn orangebtn" id="keySave">Verify & connect</button></div></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const state={pc:null,dc:null,stream:null,timer:null,start:0,transcript:[],persona:"busy",offer:"Business software and automation",difficulty:"Realistic",buyer:"small business owner",voice:"cedar",connected:false,muted:false};
+const keyName="callforge_key_session_v1";
+const key=()=>sessionStorage.getItem(keyName)||"";
+const headers=()=>({"Content-Type":"application/json","x-callforge-key":key()});
+const screens={home:$("#home"),call:$("#call"),review:$("#review")};
+function show(name){Object.values(screens).forEach(x=>x.classList.remove("active"));screens[name].classList.add("active");$("#topTitle").textContent=name==="home"?"Train the call before you make the call.":name==="call"?"Stay present. The buyer is reacting to you.":"Turn one rep into the next improvement."}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function apiError(x){try{return JSON.parse(x).error||x}catch{return x}}
+function setStatus(ok,text){$("#statusBtn").className="status "+(ok?"ok":"warn");$("#statusText").textContent=text;state.connected=ok;$("#connectLabel").textContent=ok?"AI voice connected":"Connect natural AI voice";$("#connectBtn").textContent=ok?"Reconnect AI":"Connect AI"}
+function modal(open,msg=""){$("#keyBack").classList.toggle("hidden",!open);$("#keyMsg").textContent=msg;if(open)setTimeout(()=>$("#keyInput").focus(),50)}
+async function verifyKey(){
+ const k=$("#keyInput").value.trim(); if(!k){$("#keyMsg").className="keymsg bad";$("#keyMsg").textContent="Paste a key first.";return}
+ $("#keyMsg").className="keymsg";$("#keyMsg").textContent="Verifying…";
+ try{sessionStorage.setItem(keyName,k);const r=await fetch("/api/verify",{method:"POST",headers:headers()});const t=await r.text();if(!r.ok)throw Error(apiError(t));setStatus(true,"Realtime AI voice ready");$("#keyMsg").className="keymsg ok";$("#keyMsg").textContent="Connected.";setTimeout(()=>modal(false),450)}
+ catch(e){sessionStorage.removeItem(keyName);setStatus(false,"Connect AI voice");$("#keyMsg").className="keymsg bad";$("#keyMsg").textContent=e.message}
+}
+async function checkExisting(){if(!key())return setStatus(false,"Connect AI voice");try{const r=await fetch("/api/verify",{method:"POST",headers:headers()});if(!r.ok)throw 0;setStatus(true,"Realtime AI voice ready")}catch{sessionStorage.removeItem(keyName);setStatus(false,"Connect AI voice")}}
+$("#statusBtn").onclick=$("#connectBtn").onclick=()=>{ $("#keyInput").value=key(); modal(true) };
+$("#keyCancel").onclick=()=>modal(false); $("#keySave").onclick=verifyKey; $("#keyInput").addEventListener("keydown",e=>{if(e.key==="Enter")verifyKey()});
+$("#offer").onchange=e=>{$("#customWrap").classList.toggle("hidden",e.target.value!=="custom")};
+function sync(){
+ state.persona=$("#persona").value;state.difficulty=$("#difficulty").value;state.buyer=$("#buyer").value;state.voice=$("#voice").value;
+ state.offer=$("#offer").value==="custom"?($("#customOffer").value.trim()||"a custom product or service"):$("#offer").value;
+}
+$$(".drill").forEach(b=>b.onclick=()=>{$$(".drill").forEach(x=>x.classList.remove("active"));b.classList.add("active");$("#persona").value=b.dataset.persona});
+$("#annoyedQuick").onclick=()=>{$("#persona").value="annoyed";$("#difficulty").value="Hard";$$(".drill").forEach(x=>x.classList.toggle("active",x.dataset.persona==="annoyed"));$("#start").scrollIntoView({behavior:"smooth",block:"center"})};
+$("#randomize").onclick=()=>{const ps=["busy","skeptical","annoyed","analytical","price","hostile"];$("#persona").value=ps[Math.floor(Math.random()*ps.length)];const ds=["Realistic","Hard","Nightmare"];$("#difficulty").value=ds[Math.floor(Math.random()*ds.length)]};
+$("#quickStart").onclick=()=>startCall(); $("#start").onclick=()=>startCall();
+
+function waitIce(pc){if(pc.iceGatheringState==="complete")return Promise.resolve();return new Promise(resolve=>{const to=setTimeout(resolve,1800);const f=()=>{if(pc.iceGatheringState==="complete"){clearTimeout(to);pc.removeEventListener("icegatheringstatechange",f);resolve()}};pc.addEventListener("icegatheringstatechange",f)})}
+function runtime(text,bad=false){$("#runtime").textContent=text;$("#runtime").classList.toggle("bad",bad)}
+function voiceStatus(a,b=""){$("#voiceStatus").textContent=a;$("#voiceSub").textContent=b}
+function add(role,text){
+ text=String(text||"").trim();if(!text)return;
+ const last=state.transcript[state.transcript.length-1];if(last&&last.role===role&&last.text===text)return;
+ state.transcript.push({role,text,at:Date.now()});$("#empty")?.remove();
+ const d=document.createElement("div");d.className="bubble "+(role==="seller"?"seller":"buyer");d.innerHTML='<div class="who">'+(role==="seller"?"YOU":"PROSPECT")+"</div>"+esc(text);$("#transcript").appendChild(d);$("#transcript").scrollTop=$("#transcript").scrollHeight;updateCoach()
+}
+function updateCoach(){
+ const seller=state.transcript.filter(x=>x.role==="seller"), buyer=state.transcript.filter(x=>x.role==="buyer");
+ const words=seller.reduce((n,x)=>n+x.text.split(/\s+/).filter(Boolean).length,0), bw=buyer.reduce((n,x)=>n+x.text.split(/\s+/).filter(Boolean).length,0);
+ const questions=seller.reduce((n,x)=>n+(x.text.match(/\?/g)||[]).length,0);
+ const n=seller.length;let phase="Opening",tip="Earn another 30 seconds before you pitch.",reason="Be concise, relevant, and ask one real question.",rule="Stay under 30–40 words and make the next sentence about them.";
+ if(n>=2){phase="Discovery";tip="Make them describe the business problem in their own words.";reason="Use short follow-ups. Ask impact, frequency, or how they handle it today.";rule="Do not rescue the silence. Ask, then listen."}
+ if(n>=5||questions>=3){phase="Value / Objection";tip="Tie your value to something they actually admitted.";reason="Acknowledge resistance first. Clarify before answering it.";rule="Do not dump features. Use their words."}
+ if(n>=8){phase="Close";tip="Ask for one specific, low-friction next step.";reason="Only close if the call earned it. Give a concrete time or choice.";rule="Specific beats vague: time, duration, and purpose."}
+ $("#phase").textContent=phase;$("#tip").textContent=tip;$("#reason").textContent=reason;$("#rule").textContent=rule;
+ $("#discoveryMeter").style.width=Math.min(100,questions*22+n*4)+"%";const share=words+bw?Math.round(words/(words+bw)*100):0;$("#talkMeter").style.width=Math.min(100,share)+"%"
+}
+function handleEvent(e){
+ let x;try{x=JSON.parse(e.data)}catch{return}
+ if(x.type==="input_audio_buffer.speech_started"){voiceStatus("Listening to you…","Speak normally. You can interrupt the prospect.");return}
+ if(x.type==="input_audio_buffer.speech_stopped"){voiceStatus("Buyer thinking…","Your exact words are being processed.");return}
+ if(x.type==="conversation.item.input_audio_transcription.completed"){add("seller",x.transcript);return}
+ if(x.type==="response.output_audio_transcript.done"){add("buyer",x.transcript);return}
+ if(x.type==="response.created"){voiceStatus("Buyer responding…","The prospect is reacting to this call.");return}
+ if(x.type==="response.done"){voiceStatus("Your turn","Keep it conversational.");return}
+ if(x.type==="error"){runtime(x.error?.message||"Realtime error",true)}
+}
+async function startCall(){
+ sync(); if(!key()){modal(true,"Connect AI voice before starting the live call.");return}
+ if(!navigator.mediaDevices?.getUserMedia){alert("This browser does not expose microphone access. Open this HTTPS link in Safari or Chrome.");return}
+ cleanup(false);state.transcript=[];$("#transcript").innerHTML='<div class="empty" id="empty">The prospect will answer first. Treat this like a real call.</div>';show("call");
+ $("#prospectName").textContent=state.persona==="annoyed"?"Annoyed Business Owner":state.persona[0].toUpperCase()+state.persona.slice(1)+" Business Owner";
+ $("#prospectMeta").textContent=state.buyer+" • "+state.difficulty+" • "+state.offer;$("#mood").textContent=state.persona==="annoyed"?"Annoyed":state.persona;
+ $("#avatar").textContent=state.persona==="annoyed"?"AO":"BO";runtime("Requesting microphone permission…");voiceStatus("Mic permission needed","Choose Allow when the browser asks.");
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+  state.stream=stream;const pc=new RTCPeerConnection();state.pc=pc;stream.getTracks().forEach(t=>pc.addTrack(t,stream));
+  const audio=$("#remoteAudio");pc.ontrack=e=>{audio.srcObject=e.streams[0];audio.play().catch(()=>runtime("Audio is connected. Tap the microphone once if Safari has not started playback.",false))};
+  const dc=pc.createDataChannel("oai-events");state.dc=dc;dc.onmessage=handleEvent;dc.onerror=()=>runtime("Voice data channel error.",true);
+  dc.onopen=()=>{runtime("Live AI prospect connected. This is a real speech-to-speech session.");voiceStatus("Call is live","The prospect can hear you. Interrupt naturally if needed.");setTimeout(()=>{if(dc.readyState==="open")dc.send(JSON.stringify({type:"response.create",response:{instructions:"The phone just connected. Speak first with ONE short, natural opening line that matches your business-owner persona and current level of patience. Do not explain the scenario or introduce yourself as AI."}}))},250)};
+  const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitIce(pc);
+  const r=await fetch("/api/realtime",{method:"POST",headers:headers(),body:JSON.stringify({sdp:pc.localDescription.sdp,persona:state.persona,difficulty:state.difficulty,offer:state.offer,buyer:state.buyer,voice:state.voice})});const t=await r.text();if(!r.ok)throw Error(apiError(t));const data=JSON.parse(t);
+  await pc.setRemoteDescription({type:"answer",sdp:data.sdp});startTimer()
+ }catch(e){runtime(e.message,true);voiceStatus("Call could not start","Check microphone permission and AI connection.");if(/401|key|quota|billing/i.test(e.message))modal(true,e.message)}
+}
+function startTimer(){state.start=Date.now();clearInterval(state.timer);state.timer=setInterval(()=>{const s=Math.floor((Date.now()-state.start)/1000);$("#clock").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},250)}
+function cleanup(reset=true){clearInterval(state.timer);state.timer=null;try{state.dc?.close()}catch{}try{state.pc?.close()}catch{}state.stream?.getTracks().forEach(t=>t.stop());state.dc=state.pc=state.stream=null;if(reset){$("#clock").textContent="00:00"}}
+$("#mic").onclick=()=>{if(!state.stream)return;state.muted=!state.muted;state.stream.getAudioTracks().forEach(t=>t.enabled=!state.muted);$("#mic").classList.toggle("muted",state.muted);$("#mic").textContent=state.muted?"🔇":"🎙";voiceStatus(state.muted?"Mic muted":"Mic live",state.muted?"Tap again to speak.":"The prospect can hear you.")}
+function sendText(){const text=$("#typed").value.trim();if(!text||!state.dc||state.dc.readyState!=="open")return;add("seller",text);state.dc.send(JSON.stringify({type:"conversation.item.create",item:{type:"message",role:"user",content:[{type:"input_text",text}]}}));state.dc.send(JSON.stringify({type:"response.create"}));$("#typed").value=""}
+$("#sendTyped").onclick=sendText;$("#typed").addEventListener("keydown",e=>{if(e.key==="Enter")sendText()});
+$("#hangup").onclick=()=>endCall(true);$("#exit").onclick=()=>{if(confirm("End this practice call?"))endCall(true)}
+function fallbackReview(){
+ const s=state.transcript.filter(x=>x.role==="seller");const txt=s.map(x=>x.text).join(" ");const qs=(txt.match(/\?/g)||[]).length;const w=txt.split(/\s+/).filter(Boolean).length;const avgw=s.length?w/s.length:0;
+ let opening=Math.min(20,s.length?12+(s[0].text.split(/\s+/).length<=35?5:0):0);let discovery=Math.min(25,qs*6);let objections=Math.min(25,state.transcript.length>5?15:8);let closing=Math.min(15,/meeting|demo|time|tomorrow|week|calendar|schedule/i.test(txt)?12:5);let communication=Math.max(3,15-Math.max(0,Math.round((avgw-35)/3)));let score=Math.round(opening+discovery+objections+closing+communication);
+ return {score,grade:score>=90?"A":score>=80?"B":score>=70?"C":score>=60?"D":"F",summary:"This fallback score is based on the transcript structure because AI grading was unavailable.",breakdown:{opening:{score:opening,max:20,feedback:"Keep the opener short and relevant."},discovery:{score:discovery,max:25,feedback:"Ask specific business questions before pitching."},objections:{score:objections,max:25,feedback:"Acknowledge and clarify resistance before answering."},closing:{score:closing,max:15,feedback:"Use a specific next step only after relevance is established."},communication:{score:communication,max:15,feedback:"Shorter turns create more space for the buyer."}},strengths:["You completed a live practice rep."],focus:[{title:"Discovery",why:"Use more buyer-led questions.","target":"Ask 3+ genuine discovery questions."},{title:"Brevity",why:"Long seller turns reduce buyer participation.","target":"Keep most turns under 35 words."},{title:"Specific close",why:"Vague closes are easy to dismiss.","target":"Ask for one concrete next step."}],better_lines:["What are you using for that today?","If that is worth looking at, would 15 minutes Tuesday or Wednesday be unreasonable?"]}}
+async function endCall(gradeIt){
+ cleanup(false);if(!gradeIt){show("home");return}show("review");$("#score").textContent="…";$("#summary").textContent="Analyzing the exact transcript…";$("#breakdown").innerHTML="";$("#focuses").innerHTML="";
+ let review;try{const r=await fetch("/api/grade",{method:"POST",headers:headers(),body:JSON.stringify({transcript:state.transcript,offer:state.offer,persona:state.persona,difficulty:state.difficulty})});const t=await r.text();if(!r.ok)throw Error(apiError(t));review=JSON.parse(t).review}catch(e){review=fallbackReview();review.summary+=" "+e.message}
+ renderReview(review);saveResult(review.score)
+}
+function renderReview(r){
+ const score=Math.max(0,Math.min(100,Number(r.score)||0));$("#score").textContent=score;$("#ring").style.background=`conic-gradient(var(--orange) ${score*3.6}deg,#29282d 0deg)`;$("#reviewTitle").textContent=`Score ${score}/100 • ${r.grade||""}`;$("#summary").textContent=r.summary||"";
+ const names={opening:"Opening",discovery:"Discovery",objections:"Objections",closing:"Closing",communication:"Communication"};$("#breakdown").innerHTML=Object.entries(r.breakdown||{}).map(([k,v])=>'<div class="scoreline"><span>'+names[k]+'</span><div class="bar"><span style="width:'+Math.round((v.score/v.max)*100)+'%"></span></div><b>'+v.score+'/'+v.max+'</b></div><div style="font-size:8px;color:#777;margin:-5px 0 9px 119px">'+esc(v.feedback||"")+'</div>').join("");
+ $("#strengths").innerHTML=(r.strengths||[]).map(x=>"<li>"+esc(x)+"</li>").join("")||"<li>Keep practicing.</li>";
+ $("#focuses").innerHTML=(r.focus||[]).slice(0,3).map((x,i)=>'<div class="focus"><b>#'+(i+1)+' PRIORITY</b><strong>'+esc(x.title)+'</strong><p>'+esc(x.why)+'</p><em>'+esc(x.target)+'</em></div>').join("");
+ $("#better").innerHTML=(r.better_lines||[]).map(x=>"<li>"+esc(x)+"</li>").join("")
+}
+function saveResult(score){let h=[];try{h=JSON.parse(localStorage.getItem("callforge_history")||"[]")}catch{}h.unshift({score:Number(score)||0,date:Date.now(),persona:state.persona,offer:state.offer});h=h.slice(0,100);localStorage.setItem("callforge_history",JSON.stringify(h));renderStats()}
+function renderStats(){let h=[];try{h=JSON.parse(localStorage.getItem("callforge_history")||"[]")}catch{}const avg=h.length?Math.round(h.reduce((a,b)=>a+b.score,0)/h.length):null,best=h.length?Math.max(...h.map(x=>x.score)):null;$("#avg").textContent=avg??"—";$("#best").textContent=best??"—";$("#callsLabel").textContent=h.length+" calls completed";$("#sideCalls").textContent=h.length+" calls"}
+$("#again").onclick=()=>startCall();$("#newScenario").onclick=()=>show("home");$("#historySide").onclick=()=>{show("home");$("#stats")?.scrollIntoView({behavior:"smooth"})};
+window.addEventListener("beforeunload",()=>cleanup(false));checkExisting();renderStats();
+</script>
+</body>
+</html>
